@@ -80,10 +80,8 @@ class SpotifyWebAPI
 		// set headers
         $headers = $this->authHeaders();
         $headers['Content-Type'] = 'application/json';
-		// construct full endpoint
-        $full_uri = '/v1/users/' . $uri;
 		// make the request and return
-        $this->lastResponse = $this->request->api($method, $full_uri, $options, $headers);
+        $this->lastResponse = $this->request->api($method, $uri, $options, $headers);
         return $this->lastResponse['body'];
 	}
 
