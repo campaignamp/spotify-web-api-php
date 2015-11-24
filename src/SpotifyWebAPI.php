@@ -39,6 +39,31 @@ class SpotifyWebAPI
 
         return $headers;
     }
+	
+	/**
+	 * Make a raw request to the API
+	 * 
+	 * @param string $method
+	 * @param string $uri
+	 * @param array $params
+	 * @param array $headers
+	 */
+	protected function rawRequest($method='GET',$uri=null, $params=null) {
+		// check empty
+		if(empty($method)) {
+			return NULL;
+		}
+		// json encode params
+        $options = json_encode($params);
+		// set headers
+        $headers = $this->authHeaders();
+        $headers['Content-Type'] = 'application/json';
+		// construct full endpoint
+        $full_uri = '/v1/users/' . $uri;
+		// make the request and return
+        $this->lastResponse = $this->request->api($method, $full_uri, $options, $headers);
+        return $this->lastResponse['body'];
+	}
 
     /**
      * Convert Spotify object IDs to Spotify URIs.
